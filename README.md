@@ -127,8 +127,7 @@ ai-doc-optimizer $(git diff --cached --name-only --diff-filter=ACM | grep -E '\.
 - Chunk boundary analysis
 - Semantic similarity detection
 - Error message pattern recognition
-- Table structure validation
-- Link and reference validation
+- Table semantics recognition
 
 ## License
 
