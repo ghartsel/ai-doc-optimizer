@@ -20,13 +20,13 @@ AI-Doc-Optimizer transforms human-readable documentation into AI/RAG-optimized c
 ### Binary Release
 ```bash
 # Download from releases page
-curl -L https://github.com/yourorg/ai-doc-optimizer/releases/latest/download/ai-doc-optimizer-linux-amd64.tar.gz | tar xz
+curl -L https://github.com/ghartsel/ai-doc-optimizer/releases/latest/download/ai-doc-optimizer-linux-amd64.tar.gz | tar xz
 sudo mv ai-doc-optimizer /usr/local/bin/
 ```
 
 ### Build from Source
 ```bash
-git clone https://github.com/yourorg/ai-doc-optimizer.git
+git clone https://github.com/ghartsel/ai-doc-optimizer.git
 cd ai-doc-optimizer
 go build -o ai-doc-optimizer
 ```
