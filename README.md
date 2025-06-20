@@ -28,6 +28,7 @@ sudo mv ai-doc-optimizer /usr/local/bin/
 ```bash
 git clone https://github.com/ghartsel/ai-doc-optimizer.git
 cd ai-doc-optimizer
+go mod tidy
 go build -o ai-doc-optimizer
 ```
 
