@@ -122,6 +122,14 @@ ai-doc-optimizer $(git diff --cached --name-only --diff-filter=ACM | grep -E '\.
 - [textlint](https://textlint.github.io/) - JavaScript-based text linting
 - [write-good](https://github.com/btford/write-good) - Naive English linter
 
+## TODO
+
+- Chunk boundary analysis
+- Semantic similarity detection
+- Error message pattern recognition
+- Table structure validation
+- Link and reference validation
+
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.

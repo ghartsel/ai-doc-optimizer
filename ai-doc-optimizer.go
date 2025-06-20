@@ -496,10 +496,3 @@ func isSupportedFile(path string) bool {
     }
     return false
 }
-
-// Additional utility functions for advanced analysis could be added here:
-// - Chunk boundary analysis
-// - Semantic similarity detection
-// - Error message pattern recognition
-// - Table structure validation
-// - Link and reference validation
