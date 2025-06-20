@@ -1,0 +1,104 @@
+# .ai-doc-optimizer.yml - Default configuration file
+# AI Documentation Optimizer Configuration
+
+StylesPath: "./styles"
+MinWordCount: 10
+
+# File format configurations
+Formats:
+  markdown:
+    Extensions: [".md", ".markdown"]
+    Parser: "markdown"
+  html:
+    Extensions: [".html", ".htm"]
+    Parser: "html"
+  restructuredtext:
+    Extensions: [".rst", ".txt"]
+    Parser: "rst"
+
+# Core optimization rules
+Rules:
+  # Contextual Dependencies
+  - Name: "contextual-dependency"
+    Description: "Detect sections that depend on previous context"
+    Pattern: '(?i)\b(this|that|these|those|above|below|previously|earlier)\b(?:\s+\w+){0,3}\s+(?:will|should|must|can|may)'
+    Severity: "warning"
+    Type: "suggest"
+    
+  - Name: "vague-references"
+    Description: "Detect vague references that lose meaning in isolation"
+    Pattern: '(?i)\b(?:it|they|them|its|their)\s+(?:will|should|must|can|may|allows?|provides?)'
+    Severity: "warning"
+    Type: "suggest"
+
+  # Semantic Discoverability
+  - Name: "generic-headings"
+    Description: "Detect generic headings that lack product context"
+    Pattern: '^##+\s+(?:Overview|Introduction|Getting Started|Configuration|Setup|Installation|Troubleshooting)$'
+    Severity: "suggestion"
+    Type: "suggest"
+    
+  - Name: "missing-product-context"
+    Description: "Instructions missing product/feature names"
+    Pattern: '^##+\s+(?:Configure|Setup|Install|Enable|Disable|Update)\s+\w+(?:\s+\w+)*$'
+    Severity: "suggestion"
+    Type: "suggest"
+
+  # Implicit Knowledge Assumptions
+  - Name: "assumption-words" 
+    Description: "Words that assume user knowledge"
+    Pattern: '(?i)\b(?:simply|just|obviously|clearly|of course|naturally|easily|straightforward)\b'
+    Severity: "warning"
+    Type: "suggest"
+    
+  - Name: "incomplete-prerequisites"
+    Description: "Instructions without sufficient context"
+    Pattern: '(?i)^(?:\d+\.\s*|[-*]\s*)?(?:configure|set up|enable|disable|update|modify|navigate to|click|select)\s+\w+(?:\s+\w+)*\.?\s*$'
+    Severity: "warning"
+    Type: "suggest"
+
+  # Visual Information Dependencies  
+  - Name: "visual-references"
+    Description: "References to visual elements without alternatives"
+    Pattern: '(?i)(?:see\s+(?:the\s+)?(?:diagram|image|figure|chart|screenshot|table)|(?:above|below)\s+(?:image|diagram|figure|table)|shown\s+(?:above|below))'
+    Severity: "error" 
+    Type: "error"
+    
+  - Name: "image-without-description"
+    Description: "Images without proper text descriptions"
+    Pattern: '!\[([^\]]*)\]\([^)]+\)(?!\s*\n\s*[\*_])'
+    Severity: "warning"
+    Type: "suggest"
+
+  # Layout Dependencies
+  - Name: "layout-dependent-content"
+    Description: "Content that depends on visual layout"
+    Pattern: '(?i)\b(?:left|right|top|bottom|center|middle)\s+(?:column|panel|section|side)'
+    Severity: "warning"
+    Type: "suggest"
+
+  # Error Context and Solutions
+  - Name: "incomplete-error-context"
+    Description: "Error descriptions without solutions"
+    Pattern: '(?i)(?:error|exception|failure|problem)(?:\s+\w+)*:\s*[^.!?]*[.!?]\s*$'
+    Severity: "suggestion"
+    Type: "suggest"
+    
+  - Name: "missing-error-messages"
+    Description: "Troubleshooting without exact error text"
+    Pattern: '^##+\s+(?:Error|Problem|Issue|Troubleshooting|Fix)'
+    Severity: "suggestion"
+    Type: "suggest"
+
+  # Content Organization
+  - Name: "non-descriptive-links"
+    Description: "Links with non-descriptive text"
+    Pattern: '\[(?:here|click here|this|read more|link|see here)\]\([^)]+\)'
+    Severity: "suggestion"
+    Type: "suggest"
+    
+  - Name: "broken-hierarchy"
+    Description: "Heading hierarchy issues (h1 -> h3 without h2)"
+    Pattern: '^#{1}\s+.*\n(?:[^#\n]*\n)*^#{3,}\s+'
+    Severity: "warning"
+    Type: "suggest"
