@@ -56,7 +56,7 @@ ai-doc-optimizer -output json docs/
   -fix
       Attempt to automatically fix issues
   -output string
-      Output format (standard, json, sarif) (default "standard")
+      Output format: standard (default), json
   -recursive
       Process directories recursively
 ```
@@ -99,14 +99,34 @@ Rules:
 
 - **Standard**: Human-readable console output
 - **JSON**: Machine-readable for CI integration  
-- **SARIF**: Static Analysis Results Interchange Format
 
 ### Standard
+
+This format makes it easy to identify and fix AI optimization issues in documentation.
 
 ```
 {file}:{line}:{column}: {SEVERITY} [{rule}] {message}
     Suggestion: {improvement_suggestion}
 ```
+
+**Location Information:**
+- **File path**: Exact file with the issue
+- **Line number**: Specific line for quick navigation
+- **Column number**: Precise character position
+
+**Issue Classification:**
+- **SEVERITY**: Color-coded levels (ERROR/WARNING/SUGGESTION)
+- **Rule name**: Which optimization rule triggered
+- **Clear message**: Human-readable explanation
+
+**Actionable Guidance:**
+- **Suggestion line**: Specific improvement recommendation
+- **Empty line separator**: Clean visual separation between issues
+
+**IDE Integration Ready:**
+- Format matches standard linter output (file:line:column)
+- Most editors can parse this for clickable navigation
+- Compatible with VS Code problem matcher patterns
 
 ### JSON
 

@@ -356,8 +356,6 @@ func printIssues(issues []Issue, format string) {
     switch format {
     case "json":
         printJSONIssues(issues)
-    case "sarif":
-        printSARIFIssues(issues)
     default:
         printStandardIssues(issues)
     }
@@ -409,15 +407,11 @@ func printJSONIssues(issues []Issue) {
     }
 }
 
-func printSARIFIssues(issues []Issue) {
-    fmt.Println("SARIF output not implemented yet")
-}
-
 // CLI interface
 func main() {
     var (
         configPath = flag.String("config", "", "Path to configuration file")
-        outputFormat = flag.String("output", "standard", "Output format (standard, json, sarif)")
+        outputFormat = flag.String("output", "standard", "Output format (standard, json)")
         fix = flag.Bool("fix", false, "Attempt to automatically fix issues")
         recursive = flag.Bool("recursive", false, "Process directories recursively")
     )
