@@ -4,6 +4,7 @@ package main
 
 import (
 //    "bufio"
+    "encoding/json"
     "flag"
     "fmt"
     "io/fs"
@@ -376,7 +377,36 @@ func printStandardIssues(issues []Issue) {
 }
 
 func printJSONIssues(issues []Issue) {
-    fmt.Println("JSON output not implemented yet")
+    // Create a structured output format similar to other linters
+    output := struct {
+        Version string  `json:"version"`
+        Issues  []Issue `json:"issues"`
+        Summary struct {
+            Total    int            `json:"total"`
+            BySeverity map[string]int `json:"by_severity"`
+            ByRule   map[string]int `json:"by_rule"`
+        } `json:"summary"`
+    }{
+        Version: "1.0.0",
+        Issues:  issues,
+    }
+
+    // Calculate summary statistics
+    output.Summary.Total = len(issues)
+    output.Summary.BySeverity = make(map[string]int)
+    output.Summary.ByRule = make(map[string]int)
+
+    for _, issue := range issues {
+        output.Summary.BySeverity[issue.Severity]++
+        output.Summary.ByRule[issue.Rule]++
+    }
+
+    // Pretty print JSON
+    encoder := json.NewEncoder(os.Stdout)
+    encoder.SetIndent("", "  ")
+    if err := encoder.Encode(output); err != nil {
+        fmt.Fprintf(os.Stderr, "Error encoding JSON: %v\n", err)
+    }
 }
 
 func printSARIFIssues(issues []Issue) {

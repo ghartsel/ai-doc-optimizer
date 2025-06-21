@@ -95,6 +95,60 @@ Rules:
 ❌ **Bad**: "Simply configure the endpoint URL."
 ✅ **Good**: "Configure the endpoint URL in Settings > Webhooks by entering your HTTPS endpoint."
 
+## Output Formats
+
+- **Standard**: Human-readable console output
+- **JSON**: Machine-readable for CI integration  
+- **SARIF**: Static Analysis Results Interchange Format
+
+### Standard
+
+```
+{file}:{line}:{column}: {SEVERITY} [{rule}] {message}
+    Suggestion: {improvement_suggestion}
+```
+
+### JSON
+
+The JSON format makes it easy to integrate with CI systems, create dashboards, or build additional tooling around the AI documentation optimization results!
+
+**Benefits:**
+- **CI/CD Integration**: Easy parsing for automated pipelines
+- **Dashboard Visualization**: Summary stats for reporting
+- **Filtering**: JSON structure enables post-processing
+- **Pretty Printing**: Indented output for readability
+
+```json
+{
+  "version": "1.0.0",
+  "issues": [
+    {
+      "File": "docs/api.md",
+      "Line": 15,
+      "Column": 12,
+      "Rule": "contextual-dependency",
+      "Message": "This text may depend on previous context...",
+      "Severity": "warning",
+      "Suggestion": "Replace contextual references with specific details",
+      "OriginalText": "this will configure"
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "by_severity": {
+      "warning": 5,
+      "error": 1,
+      "suggestion": 2
+    },
+    "by_rule": {
+      "contextual-dependency": 3,
+      "visual-dependency": 1,
+      "implicit-knowledge": 4
+    }
+  }
+}
+```
+
 ## Integration
 
 ### CI/CD Pipeline (GitHub Actions)
@@ -110,12 +164,6 @@ Rules:
 #!/bin/sh
 ai-doc-optimizer $(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(md|html)$')
 ```
-
-## Output Formats
-
-- **Standard**: Human-readable console output
-- **JSON**: Machine-readable for CI integration  
-- **SARIF**: Static Analysis Results Interchange Format
 
 ## Similar Tools
 
